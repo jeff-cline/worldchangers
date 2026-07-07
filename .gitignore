@@ -1,0 +1,17 @@
+# dependencies
+/node_modules
+
+# next
+/.next
+/out
+next-env.d.ts
+*.tsbuildinfo
+
+# env — secrets (Core API key/secret) live here, NEVER commit
+.env
+.env.local
+.env*.local
+
+# misc
+.DS_Store
+*.log
