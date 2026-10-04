@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { site } from "./_site/config";
+import RecaptchaProvider from "@/app/lib/RecaptchaProvider";
 
 export const metadata: Metadata = {
   title: "worldchangers.ai — The Founder's Edge",
@@ -17,7 +18,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {/* Attaches a reCAPTCHA token to every guarded form submission.
+            Inert until RECAPTCHA_SITE_KEY/SECRET_KEY are set. */}
+        <RecaptchaProvider />{children}</body>
     </html>
   );
 }

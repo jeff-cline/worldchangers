@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { coreLead, coreEmail } from "@/app/lib/core";
 import { site } from "@/app/_site/config";
+import { guardForm } from "@/app/lib/form-guard";
 
 export const runtime = "nodejs";
 
@@ -17,6 +18,13 @@ function esc(v: unknown): string {
 
 export async function POST(req: Request) {
   const b = (await req.json().catch(() => null)) as Record<string, unknown> | null;
+  const gate = await guardForm(req, "lead", (b) as Record<string, unknown> ?? {}, {
+    names: [b?.name as string | undefined, b?.firstName as string | undefined, b?.lastName as string | undefined, b?.company as string | undefined, b?.organization as string | undefined],
+    texts: [b?.message as string | undefined, b?.notes as string | undefined, b?.interest as string | undefined],
+    email: b?.email as string | undefined,
+    phone: b?.phone as string | undefined,
+  });
+  if (gate.blocked) return gate.response;
   if (!b || typeof b !== "object") return NextResponse.json({ error: "bad request" }, { status: 400 });
 
   const name = str(b.name) || "(no name)";

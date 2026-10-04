@@ -15,3 +15,15 @@ next-env.d.ts
 # misc
 .DS_Store
 *.log
+
+# --- added when this app was put under version control ---
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+coverage/
+.cache/
+dist/
+*.mp4
+*.mov
+private-uploads/
